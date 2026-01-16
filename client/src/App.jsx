@@ -7,7 +7,7 @@ import Profile from "./pages/Profile"
 
 const App = () => {
   return (
-    <div className="h-screen w-full bg-[url('./src/assets/bgImage.svg')] bg-contain border">
+    <div className="text-white bg-[url('./src/assets/bgImage.svg')] bg-cover bg-center bg-no-repeat">
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/sign-up' element={<SignUp />} />
