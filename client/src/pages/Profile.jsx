@@ -13,7 +13,7 @@ const Profile = () => {
   }
   return (
     <div className='h-screen w-full flex justify-center items-center'>
-      <div className='h-screen w-full md:h-120 md:w-160 backdrop-blur-xl border-2 border-gray-600 md:rounded-xl flex flex-col justify-evenly items-center md:flex-row'>
+      <div className='h-screen w-full md:h-120 md:w-160 backdrop-blur-xl md:border-2 md:border-gray-600 md:rounded-xl flex flex-col justify-evenly items-center md:flex-row'>
         <img src="./src/assets/logo_icon.svg" alt="logo " className='h-40 md:hidden' />
         <form className='h-100 w-[90%] md:w-[60%] flex flex-col justify-between' onSubmit={(e) => {
           updateProfile(e);
