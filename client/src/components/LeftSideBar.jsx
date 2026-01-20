@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { userDummyData } from "../assets/assets";
-import { useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const LeftSideBar = ({ chatStatus, setChatStatus, setSelectedUser }) => {
-  const navigate = useNavigate();
   const [findingUser, setFindingUser] = useState("");
   const [foundUsers, setFoundUsers] = useState(userDummyData);
+  const [showMenu, setShowMenu] = useState(false);
 
   useEffect(() => {
+    if(!foundUsers){
+      return;
+    }
     const users = userDummyData.filter((e) => (e.fullName.toLowerCase().includes(findingUser.toLowerCase())));
     setFoundUsers(users);
   }, [findingUser]);
@@ -22,14 +25,32 @@ const LeftSideBar = ({ chatStatus, setChatStatus, setSelectedUser }) => {
     >
       <div className="h-[15%] w-[90%] flex justify-between items-center px-4">
         <img src="./src/assets/logo.png" alt="logo" className="h-8" />
-        <img
-          src="./src/assets/menu_icon.png"
-          alt="menu icon"
-          className="h-6 cursor-pointer"
-          onClick={() => {
-            navigate("/profile");
-          }}
-        />
+        <div className="relative">
+          <img
+            src="./src/assets/menu_icon.png"
+            alt="menu icon"
+            className="h-6 cursor-pointer"
+            onClick={() => {
+              if (showMenu) {
+                setShowMenu(false);
+              }
+              else {
+                setShowMenu(true);
+              }
+            }}
+          />
+          {showMenu && <div className="bg-gray-800 h-30 w-28 absolute flex flex-col justify-between items-center top-10 right-0 rounded-lg">
+            <NavLink to={"/profile"} className="h-[33%] w-[90%] border-b-2 border-gray-400 flex justify-center items-center cursor-pointer">
+              <div>Profile</div>
+            </NavLink>
+            <NavLink to={"/requests"} className="h-[33%] w-[90%] border-b-2 border-gray-400 flex justify-center items-center cursor-pointer">
+              <div>Requests</div>
+            </NavLink>
+            <NavLink to={"/login"} className="h-[33%] w-[90%] flex justify-center items-center cursor-pointer">
+              <div>Logout</div>
+            </NavLink>
+          </div>}
+        </div>
       </div>
       <div className="h-[7%] w-[90%] flex justify-around items-center bg-gray-800 rounded-3xl px-2">
         <input
@@ -47,7 +68,7 @@ const LeftSideBar = ({ chatStatus, setChatStatus, setSelectedUser }) => {
           className="h-4"
         />
       </div>
-      <div className="max-h-[78%] w-[85%] pt-4 no-scrollbar overflow-y-auto overflow-y-scroll">
+      {foundUsers && foundUsers.length > 0 ? <div className="h-[78%] w-[85%] pt-4 no-scrollbar overflow-y-auto overflow-y-scroll">
         {foundUsers.map((e, i) => {
           return (
             <div
@@ -92,7 +113,7 @@ const LeftSideBar = ({ chatStatus, setChatStatus, setSelectedUser }) => {
             </div>
           );
         })}
-      </div>
+      </div> : <div className="h-[78%] w-[85%] text-center pt-2 text-lg">No Users available</div>}
     </div>
   );
 };
