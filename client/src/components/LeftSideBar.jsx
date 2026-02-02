@@ -1,19 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { userDummyData } from "../assets/assets";
 import { NavLink } from "react-router-dom";
+import axios from "axios";
+import { DataContext } from "../context/UserContext";
 
 const LeftSideBar = ({ chatStatus, setChatStatus, setSelectedUser }) => {
+  const { serverUrl } = useContext(DataContext);
   const [findingUser, setFindingUser] = useState("");
   const [foundUsers, setFoundUsers] = useState(userDummyData);
   const [showMenu, setShowMenu] = useState(false);
 
   useEffect(() => {
-    if(!foundUsers){
+    if (!foundUsers) {
       return;
     }
     const users = userDummyData.filter((e) => (e.fullName.toLowerCase().includes(findingUser.toLowerCase())));
     setFoundUsers(users);
   }, [findingUser]);
+
+  const logOutHandler = () => {
+    axios.post(`${serverUrl}/logout`,{},{withCredentials: true}).then((response) => {
+      console.log(response.data.message);
+    }).catch((error) => {
+      console.log(error.response.data.message);
+    })
+  }
 
   return (
     <div
@@ -40,15 +51,15 @@ const LeftSideBar = ({ chatStatus, setChatStatus, setSelectedUser }) => {
             }}
           />
           {showMenu && <div className="bg-gray-800 h-30 w-28 absolute flex flex-col justify-between items-center top-10 right-0 rounded-lg">
-            <NavLink to={"/profile"} className="h-[33%] w-[90%] border-b-2 border-gray-400 flex justify-center items-center cursor-pointer">
+            <NavLink to={"/profile"} className="h-[33%] w-[90%] border-b-2 border-gray-500 flex justify-center items-center cursor-pointer">
               <div>Profile</div>
             </NavLink>
-            <NavLink to={"/requests"} className="h-[33%] w-[90%] border-b-2 border-gray-400 flex justify-center items-center cursor-pointer">
+            <NavLink to={"/requests"} className="h-[33%] w-[90%] border-b-2 border-gray-500 flex justify-center items-center cursor-pointer">
               <div>Requests</div>
             </NavLink>
-            <NavLink to={"/login"} className="h-[33%] w-[90%] flex justify-center items-center cursor-pointer">
+            <div className="h-[33%] w-[90%] flex justify-center items-center cursor-pointer" onClick={logOutHandler}>
               <div>Logout</div>
-            </NavLink>
+            </div>
           </div>}
         </div>
       </div>

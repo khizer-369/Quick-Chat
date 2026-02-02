@@ -6,6 +6,5 @@ export const generateToken = async (id) => {
         return token;
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ message: "Server Error" });
     }
 }

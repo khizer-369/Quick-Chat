@@ -4,7 +4,7 @@ export const auth = async (req, res, next) => {
     try {
         const {token} = req.cookies;
         if(!token){
-            return res.status(400).json({message: "You do not have token"});
+            return res.status(400).json({message: "Please login or sign up"});
         }
 
         const getUser = jwt.verify(token, process.env.JWT_SECRET);

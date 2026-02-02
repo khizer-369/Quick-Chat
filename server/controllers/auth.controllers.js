@@ -11,7 +11,7 @@ export const signUp = async (req, res) => {
 
         const findUserName = await User.findOne({ userName });
         if (findUserName) {
-            return res.status(400).json({ message: "User is already taken" });
+            return res.status(400).json({ message: "User name is already taken" });
         }
 
         const findUser = await User.findOne({ email });
@@ -28,11 +28,11 @@ export const signUp = async (req, res) => {
             bio,
         });
 
-        const token = generateToken(createdUser._id);
+        const token = await generateToken(createdUser._id);
         res.cookie("token", token, {
             httpOnly: true,
             secure: false,
-            sameSite: "none",
+            sameSite: "lax",
             maxAge: 24 * 60 * 60 * 1000,
         });
 
@@ -55,19 +55,19 @@ export const login = async (req, res) => {
 
         const findUser = await User.findOne({ email });
         if (!findUser) {
-            return res.status(400).json({ message: "User does not exist" });
+            return res.status(400).json({ message: "Email or password is incorrect" });
         }
 
         const isMatch = await bcrypt.compare(password, findUser.password);
         if (!isMatch) {
-            return res.status(400).json({ message: "email or password is incorrect" });
+            return res.status(400).json({ message: "Email or password is incorrect" });
         }
 
         const token = await generateToken(findUser._id);
         res.cookie("token", token, {
             httpOnly: true,
             secure: false,
-            sameSite: "none",
+            sameSite: "lax",
             maxAge: 24 * 60 * 60 * 1000,
         });
 

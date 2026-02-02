@@ -1,15 +1,28 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { NavLink } from "react-router-dom"
+import { DataContext } from '../context/UserContext';
+import axios from "axios";
 
 const SignUp = () => {
+  const { serverUrl } = useContext(DataContext);
   const [signUpPart, setSignUpPart] = useState(1);
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [bio, setBio] = useState("");
 
-  const signUpHandler = (e) => {
+  const signUpHandler = async (e) => {
     e.preventDefault();
+    axios.post(`${serverUrl}/auth/sign-up`, {
+      userName,
+      email,
+      password,
+      bio
+    }, { withCredentials: true }).then((response) => {
+      console.log(response.data);
+    }).catch((error) => {
+      console.log(error.response.data.message);
+    })
     setUserName("");
     setEmail("");
     setPassword("");

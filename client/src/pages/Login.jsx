@@ -1,12 +1,23 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { NavLink } from 'react-router-dom'
+import axios from "axios";
+import { DataContext } from '../context/UserContext';
 
 const Login = () => {
+  const { serverUrl } = useContext(DataContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const loginHandler = (e) => {
     e.preventDefault();
+    axios.post(`${serverUrl}/auth/login`, {
+      email,
+      password
+    }, { withCredentials: true }).then((response) => {
+      console.log(response.data);
+    }).catch((error) => {
+      console.log(error.response.data.message);
+    })
     setEmail("");
     setPassword("");
   }

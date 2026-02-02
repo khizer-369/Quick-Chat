@@ -19,6 +19,9 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    profilePhotoUrl: {
+        type: String,
+    },
     users: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",

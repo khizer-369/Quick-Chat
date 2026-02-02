@@ -5,18 +5,21 @@ import SignUp from "./pages/SignUp"
 import Login from "./pages/Login"
 import Profile from "./pages/Profile"
 import Requests from "./pages/Requests"
+import UserContext from './context/UserContext'
 
 const App = () => {
   return (
-    <div className="text-white bg-[url('./src/assets/bgImage.svg')] bg-cover bg-center bg-no-repeat">
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/sign-up' element={<SignUp />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/profile' element={<Profile />} />
-        <Route path='/requests' element={<Requests />} />
-      </Routes>
-    </div>
+    <UserContext>
+      <div className="text-white bg-[url('./src/assets/bgImage.svg')] bg-cover bg-center bg-no-repeat">
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/sign-up' element={<SignUp />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/profile' element={<Profile />} />
+          <Route path='/requests' element={<Requests />} />
+        </Routes>
+      </div>
+    </UserContext>
   )
 }
 
