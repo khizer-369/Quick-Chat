@@ -3,12 +3,19 @@ import React from 'react'
 const Chat = ({ chatStatus, setChatStatus, selectedUser }) => {
   return (
     <div className={chatStatus ? "col-start-1 col-end-5 md:col-start-2 md:col-end-4 flex flex-col items-center" : ""}>
-      <div className='h-[12%] w-[95%] flex items-center gap-2 border-b border-gray-500'>
-        <img src="./src/assets/arrow_icon.png" alt="arrow icon" className='h-8 cursor-pointer' onClick={() => {
-          setChatStatus(false);
-        }} />
-        <img src={selectedUser.profilePic} alt="profile image" className='h-12 rounded-full' />
-        <h1 className='text-lg font-medium'>{selectedUser.fullName}</h1>
+      <div className='h-[12%] w-[95%] flex justify-between items-center border-b border-gray-500'>
+        <div className='flex items-center gap-2'>
+          <img src="./src/assets/arrow_icon.png" alt="arrow icon" className='h-8 cursor-pointer' onClick={() => {
+            setChatStatus(false);
+          }} />
+          <img src={selectedUser?.profilePhotoUrl ? selectedUser.profilePhotoUrl : "./src/assets/avatar_icon.png"} alt="profile image" className='h-10 rounded-full' />
+          <h1 className='text-lg font-medium'>{selectedUser.userName}</h1>
+        </div>
+        <div>
+          <img src="./src/assets/delete_icon.png" alt="delete icon" className='h-6 mr-3 cursor-pointer' onClick={() => {
+            setChatStatus(false);
+          }} />
+        </div>
       </div>
       <div className='h-[80%] w-[90%]'></div>
       <form className='h-[12%] w-[95%] md:w-[90%] flex justify-between items-center' onSubmit={(e) => {

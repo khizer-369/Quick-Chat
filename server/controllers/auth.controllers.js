@@ -36,10 +36,7 @@ export const signUp = async (req, res) => {
             maxAge: 24 * 60 * 60 * 1000,
         });
 
-        const userWithOutPassword = createdUser.toObject();
-        delete userWithOutPassword.password;
-
-        return res.status(201).json(userWithOutPassword);
+        return res.status(201).json({ message: "Sign up successfully" });
     } catch (error) {
         console.log(error);
         return res.status(500).json({ message: "Server Error" });
@@ -53,7 +50,7 @@ export const login = async (req, res) => {
             return res.status(400).json({ message: "Please fill in all the details" });
         }
 
-        const findUser = await User.findOne({ email });
+        const findUser = await User.findOne({ email }).populate("users").populate("requests");
         if (!findUser) {
             return res.status(400).json({ message: "Email or password is incorrect" });
         }
@@ -71,10 +68,7 @@ export const login = async (req, res) => {
             maxAge: 24 * 60 * 60 * 1000,
         });
 
-        const userWithOutPassword = findUser.toObject();
-        delete userWithOutPassword.password;
-
-        return res.status(200).json(userWithOutPassword);
+        return res.status(200).json({ message: "Login successfully" });
     } catch (error) {
         console.log(error);
         return res.status(500).json({ message: "Server Error" });

@@ -1,12 +1,14 @@
 import React, { useContext, useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom';
 import axios from "axios";
 import { DataContext } from '../context/UserContext';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-  const { serverUrl } = useContext(DataContext);
+  const { serverUrl, getUsersHandler } = useContext(DataContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const loginHandler = (e) => {
     e.preventDefault();
@@ -14,7 +16,9 @@ const Login = () => {
       email,
       password
     }, { withCredentials: true }).then((response) => {
-      console.log(response.data);
+      console.log(response.data.message);
+      getUsersHandler();
+      navigate("/");
     }).catch((error) => {
       console.log(error.response.data.message);
     })

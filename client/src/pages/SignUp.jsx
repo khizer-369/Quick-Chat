@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react'
-import { NavLink } from "react-router-dom"
+import { NavLink } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import { DataContext } from '../context/UserContext';
 import axios from "axios";
 
@@ -10,6 +11,7 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [bio, setBio] = useState("");
+  const navigate = useNavigate();
 
   const signUpHandler = async (e) => {
     e.preventDefault();
@@ -19,7 +21,8 @@ const SignUp = () => {
       password,
       bio
     }, { withCredentials: true }).then((response) => {
-      console.log(response.data);
+      console.log(response.data.message);
+      navigate("/");
     }).catch((error) => {
       console.log(error.response.data.message);
     })

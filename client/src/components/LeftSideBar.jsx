@@ -1,26 +1,32 @@
 import React, { useContext, useEffect, useState } from "react";
-import { userDummyData } from "../assets/assets";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
 import { DataContext } from "../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 const LeftSideBar = ({ chatStatus, setChatStatus, setSelectedUser }) => {
-  const { serverUrl } = useContext(DataContext);
+  const { serverUrl, users } = useContext(DataContext);
   const [findingUser, setFindingUser] = useState("");
-  const [foundUsers, setFoundUsers] = useState(userDummyData);
+  const [foundUsers, setFoundUsers] = useState();
   const [showMenu, setShowMenu] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!foundUsers) {
       return;
     }
-    const users = userDummyData.filter((e) => (e.fullName.toLowerCase().includes(findingUser.toLowerCase())));
-    setFoundUsers(users);
+    const Users = users.filter((e) => (e.userName.toLowerCase().includes(findingUser.toLowerCase())));
+    setFoundUsers(Users);
   }, [findingUser]);
 
+  useEffect(() => {
+    setFoundUsers(users);
+  }, [users])
+
   const logOutHandler = () => {
-    axios.post(`${serverUrl}/logout`,{},{withCredentials: true}).then((response) => {
+    axios.post(`${serverUrl}/logout`, {}, { withCredentials: true }).then((response) => {
       console.log(response.data.message);
+      navigate("/login");
     }).catch((error) => {
       console.log(error.response.data.message);
     })
@@ -35,7 +41,7 @@ const LeftSideBar = ({ chatStatus, setChatStatus, setSelectedUser }) => {
       }
     >
       <div className="h-[15%] w-[90%] flex justify-between items-center px-4">
-        <img src="./src/assets/logo.png" alt="logo" className="h-8" />
+        <img src="./src/assets/logo.png" alt="logo" className="h-8 md:h-7 lg:h-8" />
         <div className="relative">
           <img
             src="./src/assets/menu_icon.png"
@@ -91,40 +97,18 @@ const LeftSideBar = ({ chatStatus, setChatStatus, setSelectedUser }) => {
               }}
             >
               <img
-                src={e.profilePic}
+                src={e.profilePhotoUrl ? e.profilePhotoUrl : "./src/assets/avatar_icon.png"}
                 alt="profile image"
-                className="h-10 rounded-full"
+                className="h-10 w-10 rounded-full"
               />
               <div>
-                <h1>{e.fullName}</h1>
+                <h1>{e.userName}</h1>
                 <p className="text-gray-400 text-sm">Offline</p>
               </div>
             </div>
           );
         })}
-        {foundUsers.map((e, i) => {
-          return (
-            <div
-              className="flex items-center gap-2 mb-2 cursor-pointer"
-              key={i}
-              onClick={() => {
-                setChatStatus(true);
-                setSelectedUser(e);
-              }}
-            >
-              <img
-                src={e.profilePic}
-                alt="profile image"
-                className="h-10 rounded-full"
-              />
-              <div>
-                <h1>{e.fullName}</h1>
-                <p className="text-gray-400 text-sm">Offline</p>
-              </div>
-            </div>
-          );
-        })}
-      </div> : <div className="h-[78%] w-[85%] text-center pt-2 text-lg">No Users available</div>}
+      </div> : <div className="h-[78%] w-[85%] text-center pt-2 text-lg text-gray-300">No Users available</div>}
     </div>
   );
 };

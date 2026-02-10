@@ -3,12 +3,12 @@ import User from "../models/User.js";
 export const sendRequest = async (req, res) => {
     try {
         const senderId = req.UserId;
-        const { receiverId } = req.body;
-        if (!receiverId) {
-            return res.status(400).json({ message: "Please give receiver id" });
+        const { receiverEmail } = req.body;
+        if (!receiverEmail) {
+            return res.status(400).json({ message: "Please give email" });
         }
 
-        const receiver = await User.findById(receiverId);
+        const receiver = await User.findOne({ email: receiverEmail });
         if (!receiver) {
             return res.status(400).json({ message: "Email not found" });
         }
@@ -19,6 +19,10 @@ export const sendRequest = async (req, res) => {
 
         if (receiver.requests.some(id => id.toString() === senderId)) {
             return res.status(400).json({ message: "You have already sent the request" });
+        }
+
+        if (receiver.users.some(id => id.toString() === senderId)) {
+            return res.status(400).json({ message: "User already in your list" });
         }
 
         receiver.requests.push(senderId);
@@ -91,6 +95,25 @@ export const cancelRequest = async (req, res) => {
         await receiver.save();
 
         return res.status(200).json({ message: "Request canceled successfully" });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: "Server Error" });
+    }
+}
+
+export const deleteUser = async (req, res) => {
+    try {
+        const senderId = req.UserId;
+        const { deleteUserId } = req.body;
+        const user = await User.findById(senderId);
+        if (!user.users.some(id => id.toString() === deleteUserId)) {
+            return res.status(400).json({ message: "You have already deleted." });
+        }
+
+        user.users = user.users.filter(id => id.toString() !== deleteUserId);
+        await user.save();
+
+        return res.status(200).json({ message: "User successfully delete" });
     } catch (error) {
         console.log(error);
         return res.status(500).json({ message: "Server Error" });
