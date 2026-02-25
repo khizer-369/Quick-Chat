@@ -17,7 +17,7 @@ const server = http.createServer(app);
 
 export const io = new Server(server, {
     cors: {
-        origin: "http://localhost:5173",
+        origin: "https://quick-chat-pink.vercel.app",
         credentials: true,
     }
 });
@@ -41,7 +41,7 @@ io.on("connection", (socket) => {
     })
 });
 
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(cors({ origin: "https://quick-chat-pink.vercel.app", credentials: true }));
 app.use(cookieParser());
 app.use(express.json());
 app.use("/api/auth", authRouter);

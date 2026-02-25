@@ -15,7 +15,7 @@ const App = () => {
       <UserContext>
         <Toaster />
         <Suspense fallback={<Skeleton />}>
-          <div className="text-white bg-[url('./src/assets/bgImage.svg')] bg-cover bg-center bg-no-repeat">
+          <div className="text-white bg-[url('/bgImage.svg')] bg-cover bg-center bg-no-repeat">
             <Routes>
               <Route path='/' element={<Home />} />
               <Route path='/sign-up' element={<SignUp />} />
