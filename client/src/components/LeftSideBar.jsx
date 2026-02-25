@@ -2,14 +2,13 @@ import React, { useContext, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
 import { DataContext } from "../context/UserContext";
-import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
-const LeftSideBar = ({ chatStatus, setChatStatus, setSelectedUser }) => {
-  const { serverUrl, users } = useContext(DataContext);
+const LeftSideBar = ({ chatStatus, setChatStatus, setSelectedUser, setMessages }) => {
+  const { serverUrl, users, onlineUsers, unSeenCount, setUnSeenCount } = useContext(DataContext);
   const [findingUser, setFindingUser] = useState("");
   const [foundUsers, setFoundUsers] = useState();
   const [showMenu, setShowMenu] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (!foundUsers) {
@@ -24,11 +23,18 @@ const LeftSideBar = ({ chatStatus, setChatStatus, setSelectedUser }) => {
   }, [users])
 
   const logOutHandler = () => {
-    axios.post(`${serverUrl}/logout`, {}, { withCredentials: true }).then((response) => {
-      console.log(response.data.message);
-      navigate("/login");
+    axios.post(`${serverUrl}/logout`, {}, { withCredentials: true }).then(() => {
+      location.reload();
     }).catch((error) => {
-      console.log(error.response.data.message);
+      toast.error(error.response.data.message);
+    })
+  }
+
+  const messagesHandler = (id) => {
+    axios.post(`${serverUrl}/selected-user-messages`, { selectedUserId: id }, { withCredentials: true }).then((response) => {
+      setMessages(response.data);
+    }).catch((error) => {
+      toast.error(error.response.data.message);
     })
   }
 
@@ -69,7 +75,7 @@ const LeftSideBar = ({ chatStatus, setChatStatus, setSelectedUser }) => {
           </div>}
         </div>
       </div>
-      <div className="h-[7%] w-[90%] flex justify-around items-center bg-gray-800 rounded-3xl px-2">
+      <div className="h-[6%] sm:h-[7%] w-[90%] flex justify-around items-center bg-gray-800 rounded-3xl px-2">
         <input
           type="text"
           placeholder="Search User..."
@@ -85,29 +91,40 @@ const LeftSideBar = ({ chatStatus, setChatStatus, setSelectedUser }) => {
           className="h-4"
         />
       </div>
-      {foundUsers && foundUsers.length > 0 ? <div className="h-[78%] w-[85%] pt-4 no-scrollbar overflow-y-auto overflow-y-scroll">
+      {foundUsers && foundUsers.length > 0 ? <div className="h-[78%] w-[85%] pt-4 flex flex-col overflow-y-auto no-scrollbar">
         {foundUsers.map((e, i) => {
+          const isOnline = onlineUsers?.includes(e._id);
+          const unSeen = unSeenCount[e._id];
           return (
             <div
-              className="flex items-center gap-2 mb-2 cursor-pointer"
+              className="flex justify-between items-center gap-2 mb-2 cursor-pointer"
               key={i}
               onClick={() => {
                 setChatStatus(true);
                 setSelectedUser(e);
+                messagesHandler(e._id);
+                const { [e._id]: romoved, ...rest } = unSeenCount;
+                setUnSeenCount(rest);
               }}
             >
-              <img
-                src={e.profilePhotoUrl ? e.profilePhotoUrl : "./src/assets/avatar_icon.png"}
-                alt="profile image"
-                className="h-10 w-10 rounded-full"
-              />
-              <div>
-                <h1>{e.userName}</h1>
-                <p className="text-gray-400 text-sm">Offline</p>
+              <div className="flex gap-2">
+                <img
+                  src={e.profilePhotoUrl ? e.profilePhotoUrl : "./src/assets/avatar_icon.png"}
+                  alt="profile image"
+                  className="h-10 w-10 rounded-full"
+                />
+                <div>
+                  <h1>{e.userName}</h1>
+                  <div>
+                    {isOnline ? <p className="text-green-500 text-sm">Online</p> : <p className="text-gray-400 text-sm">Offline</p>}
+                  </div>
+                </div>
               </div>
+              <div>{unSeen ? <p className="h-5 w-5 flex justify-center items-center bg-purple-500 rounded-full">{unSeen}</p> : <p></p>}</div>
             </div>
           );
         })}
+
       </div> : <div className="h-[78%] w-[85%] text-center pt-2 text-lg text-gray-300">No Users available</div>}
     </div>
   );

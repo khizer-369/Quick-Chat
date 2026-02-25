@@ -2,36 +2,43 @@ import React, { useContext, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { DataContext } from '../context/UserContext';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const Requests = () => {
-    const { serverUrl, requests, setRequests } = useContext(DataContext);
+    const { serverUrl, requests, setRequests, setUsers } = useContext(DataContext);
     const [receiverEmail, setReceiverEmail] = useState("");
+    const [disabledBtn, setDisabledBtn] = useState(false);
 
     const requestSubmitHandler = (e) => {
         e.preventDefault();
         axios.post(`${serverUrl}/send-request`, { receiverEmail }, { withCredentials: true }).then((response) => {
-            console.log(response.data.message);
+            toast.success(response.data.message);
         }).catch((error) => {
-            console.log(error.response.data.message);
+            toast.error(error.response.data.message);
         })
         setReceiverEmail("");
     }
 
     const requestAcceptHandler = (e) => {
+        setDisabledBtn(true);
         axios.post(`${serverUrl}/accept-request`, { senderId: e._id }, { withCredentials: true }).then((response) => {
-            console.log(response.data.message);
+            toast.success(response.data.message);
             setRequests(prev => prev.map(item => item._id === e._id ? { ...item, requestStatus: true, requestStatusText: "Accepted" } : item));
+            setUsers(response.data.user.users);
         }).catch((error) => {
-            console.log(error.response.data.message);
+            toast.error(error.response.data.message);
+            setDisabledBtn(false);
         })
     }
 
     const requestCancelHandler = (e) => {
+        setDisabledBtn(true);
         axios.post(`${serverUrl}/cancel-request`, { senderId: e._id }, { withCredentials: true }).then((response) => {
-            console.log(response.data.message);
+            toast.success(response.data.message);
             setRequests(prev => prev.map(item => item._id === e._id ? { ...item, requestStatus: true, requestStatusText: "Cancelled" } : item));
         }).catch((error) => {
-            console.log(error.response.data.message);
+            toast.error(error.response.data.message);
+            setDisabledBtn(false);
         })
     }
     return (
@@ -74,12 +81,12 @@ const Requests = () => {
                                             <h1 className='text-lg'>{e.userName}</h1>
                                         </div>
                                         {e.requestStatus ? <div className={e.requestStatusText === "Accepted" ? "text-purple-500 text-lg" : "text-red-500 text-lg"}>{e.requestStatusText}</div> : <div className='flex items-center'>
-                                            <button className='h-9 w-18 bg-purple-500 cursor-pointer rounded' onClick={() => {
+                                            <button className='h-9 w-17 text-md  bg-purple-500 cursor-pointer rounded' onClick={() => {
                                                 requestAcceptHandler(e);
-                                            }}>Confirm</button>
+                                            }} disabled={disabledBtn}>Confirm</button>
                                             <button className='text-purple-500 pl-2 pr-2 cursor-pointer' onClick={() => {
                                                 requestCancelHandler(e);
-                                            }}>Cancel</button>
+                                            }} disabled={disabledBtn}>Cancel</button>
                                         </div>}
                                     </div>
                                 );

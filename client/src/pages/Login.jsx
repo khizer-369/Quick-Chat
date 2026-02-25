@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import axios from "axios";
 import { DataContext } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 const Login = () => {
   const { serverUrl, getUsersHandler } = useContext(DataContext);
@@ -16,11 +17,12 @@ const Login = () => {
       email,
       password
     }, { withCredentials: true }).then((response) => {
-      console.log(response.data.message);
       getUsersHandler();
       navigate("/");
+      toast.success(response.data.message);
     }).catch((error) => {
       console.log(error.response.data.message);
+      toast.error(error.response.data.message);
     })
     setEmail("");
     setPassword("");
@@ -29,7 +31,7 @@ const Login = () => {
   return (
     <div className='backdrop-blur-xl h-screen w-full flex flex-col justify-evenly items-center'>
       <img src="./src/assets/logo_big.svg" alt="logo" className='h-20' />
-      <form className='bg-white/8 h-[63%] w-[95%] sm:h-95 sm:w-85 flex flex-col justify-evenly items-center border-2 border-gray-600 rounded-lg' onSubmit={(e) => {
+      <form className='bg-white/8 h-[50%] w-[90%] sm:h-95 sm:w-85 flex flex-col justify-evenly items-center border-2 border-gray-600 rounded-lg' onSubmit={(e) => {
         loginHandler(e);
       }}>
         <h1 className='w-[90%] text-2xl'>Login</h1>

@@ -22,7 +22,7 @@ export const sendRequest = async (req, res) => {
         }
 
         if (receiver.users.some(id => id.toString() === senderId)) {
-            return res.status(400).json({ message: "User already in your list" });
+            return res.status(400).json({ message: "User already in your contact" });
         }
 
         receiver.requests.push(senderId);
@@ -66,7 +66,9 @@ export const acceptRequest = async (req, res) => {
         sender.users.push(receiverId);
         await sender.save();
 
-        return res.status(200).json({ message: "Request accepted successfully" });
+        const user = await User.findById(receiverId).populate("users");
+
+        return res.status(200).json({ message: "Request accepted successfully", user });
     } catch (error) {
         console.log(error);
         return res.status(500).json({ message: "Server Error" });
@@ -105,15 +107,25 @@ export const deleteUser = async (req, res) => {
     try {
         const senderId = req.UserId;
         const { deleteUserId } = req.body;
+
         const user = await User.findById(senderId);
+        const deleteUser = await User.findById(deleteUserId);
+
+        if (!deleteUser) {
+            return res.status(400).json({ message: "User not found" });
+        }
+
         if (!user.users.some(id => id.toString() === deleteUserId)) {
-            return res.status(400).json({ message: "You have already deleted." });
+            return res.status(400).json({ message: "This user is not in your contacts" });
         }
 
         user.users = user.users.filter(id => id.toString() !== deleteUserId);
         await user.save();
 
-        return res.status(200).json({ message: "User successfully delete" });
+        deleteUser.users = deleteUser.users.filter(id => id.toString() !== senderId);
+        await deleteUser.save();
+
+        return res.status(200).json({ message: "User successfully deleted" });
     } catch (error) {
         console.log(error);
         return res.status(500).json({ message: "Server Error" });

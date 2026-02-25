@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import { DataContext } from '../context/UserContext';
 import axios from "axios";
+import toast from 'react-hot-toast';
 
 const SignUp = () => {
   const { serverUrl } = useContext(DataContext);
@@ -21,10 +22,10 @@ const SignUp = () => {
       password,
       bio
     }, { withCredentials: true }).then((response) => {
-      console.log(response.data.message);
       navigate("/");
+      toast.success(response.data.message);
     }).catch((error) => {
-      console.log(error.response.data.message);
+      toast.error(error.response.data.message);
     })
     setUserName("");
     setEmail("");
@@ -35,7 +36,7 @@ const SignUp = () => {
   return (
     <div className='backdrop-blur-xl h-screen w-full flex flex-col justify-evenly items-center'>
       <img src="./src/assets/logo_big.svg" alt="logo" className='h-20' />
-      <div className='bg-white/8 h-[70%] w-[95%] sm:h-110 sm:w-85 border-2 border-gray-600 rounded-lg'>
+      <div className='bg-white/8 h-[60%] w-[90%] sm:h-110 sm:w-85 border-2 border-gray-600 rounded-lg'>
         {signUpPart === 1 ? <form className='h-full w-full flex flex-col justify-evenly items-center' onSubmit={(e) => {
           e.preventDefault();
           setSignUpPart(2);

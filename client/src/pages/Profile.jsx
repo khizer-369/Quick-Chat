@@ -3,9 +3,10 @@ import AvatarIcon from "/src/assets/avatar_icon.png";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { DataContext } from '../context/UserContext';
+import toast from 'react-hot-toast';
 
 const Profile = () => {
-  const { serverUrl, user } = useContext(DataContext);
+  const { serverUrl, user, setUser } = useContext(DataContext);
   const [profilePic, setProfilePic] = useState(AvatarIcon);
   const [profilePhoto, setProfilePhoto] = useState();
   const [userName, setUserName] = useState();
@@ -38,21 +39,23 @@ const Profile = () => {
   const updateProfile = (e) => {
     e.preventDefault();
     axios.post(`${serverUrl}/profile-update`, formData, { withCredentials: true }).then((response) => {
-      console.log(response.data.message);
-      setProfilePic(AvatarIcon);
-      setUserName(null);
-      setBio(null);
       navigate("/");
+      toast.success(response.data.message);
+      setUser(response.data.updatedProfile);
     }).catch((error) => {
       console.log(error);
+      toast.error(error.response.data.message);
     })
   }
   return (
     <div className='h-screen w-full flex justify-center items-center'>
       <div className='h-screen w-full md:h-120 md:w-160 backdrop-blur-xl md:border-2 md:border-gray-600 md:rounded-xl flex flex-col justify-evenly items-center md:flex-row'>
-        <NavLink to={"/"}>
-          <img src="./src/assets/logo_icon.svg" alt="logo " className='h-40 md:hidden cursor-pointer' />
-        </NavLink>
+        <div className='h-55 w-[90%] flex flex-col justify-between items-center md:hidden'>
+          <NavLink to={"/"} className="w-full">
+            <img src="./src/assets/arrow_icon.png" alt="arrow icon" className='h-10' />
+          </NavLink>
+          <img src="./src/assets/logo_icon.svg" alt="logo " className='h-40 cursor-pointer' />
+        </div>
         <form className='h-100 w-[90%] md:w-[60%] flex flex-col justify-between' onSubmit={(e) => {
           updateProfile(e);
         }}>
@@ -65,7 +68,7 @@ const Profile = () => {
           <input type="text" value={userName} placeholder='User Name' className='h-10 w-full bg-transparent border-gray-500 border-2 rounded outline-none pl-2' onChange={(e) => {
             setUserName(e.target.value);
           }} required />
-          <textarea value={bio} placeholder='Bio...' className='h-35 w-full bg-transparent border-gray-500 border-2 rounded outline-none pl-2 pt-1' onChange={(e) => {
+          <textarea value={bio} placeholder='Bio...' className='h-35 w-full bg-transparent border-gray-500 border-2 rounded outline-none pl-2 pt-1 resize-none' onChange={(e) => {
             setBio(e.target.value);
           }} required></textarea>
           <button className='h-11 w-full bg-purple-500 rounded-full text-lg cursor-pointer'>Save</button>
