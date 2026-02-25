@@ -70,7 +70,7 @@ const Chat = ({ chatStatus, setChatStatus, selectedUser, setSelectedUser, messag
           </div>
         </div>
         <div>
-          <img src="./src/assets/delete_icon.png" alt="delete icon" className='h-6 mr-3 cursor-pointer' onClick={() => {
+          <img src="/delete_icon.png" alt="delete icon" className='h-6 mr-3 cursor-pointer' onClick={() => {
             setChatStatus(false);
             setSelectedUser(null);
             deleteUser();

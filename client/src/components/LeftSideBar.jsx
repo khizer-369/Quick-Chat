@@ -109,7 +109,7 @@ const LeftSideBar = ({ chatStatus, setChatStatus, setSelectedUser, setMessages }
             >
               <div className="flex gap-2">
                 <img
-                  src={e.profilePhotoUrl ? e.profilePhotoUrl : "./src/assets/avatar_icon.png"}
+                  src={e.profilePhotoUrl ? e.profilePhotoUrl : "/avatar_icon.png"}
                   alt="profile image"
                   className="h-10 w-10 rounded-full"
                 />

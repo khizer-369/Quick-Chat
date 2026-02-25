@@ -27,7 +27,7 @@ const RightSideBar = ({ chatStatus, selectedUser }) => {
           <button className='h-10 w-45 bg-purple-500 rounded-full cursor-pointer mb-4' onClick={logOutHandler}>Logout</button>
         </div>
       </div> : <div className='h-full flex flex-col justify-center items-center gap-3'>
-        <img src="./src/assets/logo_icon.svg" alt="logo" className='h-18' />
+        <img src="/logo_icon.svg" alt="logo" className='h-18' />
         <h1 className='text-xl'>Chat anytime, anywhere</h1>
       </div>}
     </div>
