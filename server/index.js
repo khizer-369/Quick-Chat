@@ -13,7 +13,6 @@ import { Server } from "socket.io";
 
 dotenv.config();
 const app = express();
-const PORT = process.env.PORT || 8000;
 const server = http.createServer(app);
 
 export const io = new Server(server, {
@@ -55,7 +54,13 @@ app.get("/", (req, res) => {
     res.send("Hello World");
 })
 
-server.listen(PORT, () => {
-    dbConnect();
-    console.log(`Server started on ${PORT}`);
-});
+dbConnect();
+
+if (process.env.NODE_ENV != "production") {
+    const PORT = process.env.PORT || 8000;
+    server.listen(PORT, () => {
+        console.log(`Server started on ${PORT}`);
+    });
+}
+
+export default server;
