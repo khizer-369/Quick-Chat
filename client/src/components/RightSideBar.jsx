@@ -19,7 +19,7 @@ const RightSideBar = ({ chatStatus, selectedUser }) => {
     <div className={chatStatus ? "bg-gray-600/40 hidden md:block" : "col-start-3 col-end-5 bg-gray-600/40 hidden md:block"}>
       {chatStatus ? <div className='h-full flex flex-col justify-between items-center'>
         <div className='h-[50%] w-full flex flex-col justify-center items-center gap-2 border-b border-gray-500'>
-          <img src={selectedUser?.profilePhotoUrl ? selectedUser.profilePhotoUrl : "./src/assets/avatar_icon.png"} alt="profile image" className='h-20 w-20 rounded-full' />
+          <img src={selectedUser?.profilePhotoUrl ? selectedUser.profilePhotoUrl : "/avatar_icon.png"} alt="profile image" className='h-20 w-20 rounded-full' />
           <h1 className='text-xl'>{selectedUser.userName}</h1>
           <p className='text-center'>{selectedUser.bio}</p>
         </div>

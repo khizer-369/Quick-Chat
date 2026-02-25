@@ -58,12 +58,12 @@ const Chat = ({ chatStatus, setChatStatus, selectedUser, setSelectedUser, messag
     <div className={chatStatus ? "col-start-1 col-end-5 md:col-start-2 md:col-end-4 flex flex-col items-center relative" : ""}>
       <div className='h-[12%] w-[95%] flex justify-between items-center border-b border-gray-500'>
         <div className='flex items-center gap-2'>
-          <img src="./src/assets/arrow_icon.png" alt="arrow icon" className='h-8 cursor-pointer' onClick={() => {
+          <img src="/arrow_icon.png" alt="arrow icon" className='h-8 cursor-pointer' onClick={() => {
             setChatStatus(false);
             setSelectedUser(null);
 
           }} />
-          <img src={selectedUser?.profilePhotoUrl ? selectedUser.profilePhotoUrl : "./src/assets/avatar_icon.png"} alt="profile image" className='h-12 w-12 rounded-full' />
+          <img src={selectedUser?.profilePhotoUrl ? selectedUser.profilePhotoUrl : "/avatar_icon.png"} alt="profile image" className='h-12 w-12 rounded-full' />
           <div>
             <h1 className='text-lg font-medium'>{selectedUser.userName}</h1>
             {onlineUsers.includes(selectedUser._id) ? <p className='text-sm text-green-500 tracking-wide'>Online</p> : <p className='text-sm text-gray-400'>Offline</p>}
@@ -120,10 +120,10 @@ const Chat = ({ chatStatus, setChatStatus, selectedUser, setSelectedUser, messag
           <input type="text" placeholder='Send a message' className='h-full w-[75%] md:w-[80%] outline-none' value={text} onChange={(e) => {
             setText(e.target.value);
           }} />
-          <img src="./src/assets/emoji_icon.png" alt="emoji image" className='h-5 cursor-pointer' onClick={() => {
+          <img src="/emoji_icon.png" alt="emoji image" className='h-5 cursor-pointer' onClick={() => {
             setEmojiDiv(prev => !prev);
           }} />
-          <img src="./src/assets/gallery_icon.svg" alt="gallery icon" className='h-5 cursor-pointer' onClick={() => {
+          <img src="/gallery_icon.svg" alt="gallery icon" className='h-5 cursor-pointer' onClick={() => {
             getFile();
           }} />
           <input type="file" className='hidden' ref={file} onChange={(e) => {
@@ -131,7 +131,7 @@ const Chat = ({ chatStatus, setChatStatus, selectedUser, setSelectedUser, messag
           }} />
         </div>
         <button>
-          <img src="./src/assets/send_button.svg" alt="send button" className='h-9 cursor-pointer' />
+          <img src="/send_button.svg" alt="send button" className='h-9 cursor-pointer' />
         </button>
       </form>
     </div>

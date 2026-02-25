@@ -61,7 +61,7 @@ const Home = () => {
     <div className="h-screen w-full flex justify-center items-center">
       {previewImage && (<div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex flex-col justify-evenly items-center z-50 l duration-300">
         <div className="w-[90%] flex justify-between">
-          <img src="./src/assets/download_icon.png" alt="download icon" className="h-6 cursor-pointer" onClick={() => {
+          <img src="/download_icon.png" alt="download icon" className="h-6 cursor-pointer" onClick={() => {
             handleDownload();
           }} />
           <img src="./src/assets/cross_icon.png" alt="cross icon" className="h-8 cursor-pointer" onClick={() => {

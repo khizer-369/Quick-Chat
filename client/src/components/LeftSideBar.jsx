@@ -47,10 +47,10 @@ const LeftSideBar = ({ chatStatus, setChatStatus, setSelectedUser, setMessages }
       }
     >
       <div className="h-[15%] w-[90%] flex justify-between items-center px-4">
-        <img src="./src/assets/logo.png" alt="logo" className="h-8 md:h-7 lg:h-8" />
+        <img src="/logo.png" alt="logo" className="h-8 md:h-7 lg:h-8" />
         <div className="relative">
           <img
-            src="./src/assets/menu_icon.png"
+            src="/menu_icon.png"
             alt="menu icon"
             className="h-6 cursor-pointer"
             onClick={() => {
@@ -86,7 +86,7 @@ const LeftSideBar = ({ chatStatus, setChatStatus, setSelectedUser, setMessages }
           }}
         />
         <img
-          src="./src/assets/search_icon.png"
+          src="/search_icon.png"
           alt="search icon"
           className="h-4"
         />

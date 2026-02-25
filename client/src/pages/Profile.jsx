@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import AvatarIcon from "/src/assets/avatar_icon.png";
+import AvatarIcon from "/avatar_icon.png";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { DataContext } from '../context/UserContext';
@@ -52,9 +52,9 @@ const Profile = () => {
       <div className='h-screen w-full md:h-120 md:w-160 backdrop-blur-xl md:border-2 md:border-gray-600 md:rounded-xl flex flex-col justify-evenly items-center md:flex-row'>
         <div className='h-55 w-[90%] flex flex-col justify-between items-center md:hidden'>
           <NavLink to={"/"} className="w-full">
-            <img src="./src/assets/arrow_icon.png" alt="arrow icon" className='h-10' />
+            <img src="/arrow_icon.png" alt="arrow icon" className='h-10' />
           </NavLink>
-          <img src="./src/assets/logo_icon.svg" alt="logo " className='h-40 cursor-pointer' />
+          <img src="/logo_icon.svg" alt="logo " className='h-40 cursor-pointer' />
         </div>
         <form className='h-100 w-[90%] md:w-[60%] flex flex-col justify-between' onSubmit={(e) => {
           updateProfile(e);
@@ -73,7 +73,7 @@ const Profile = () => {
           }} required></textarea>
           <button className='h-11 w-full bg-purple-500 rounded-full text-lg cursor-pointer'>Save</button>
         </form>
-        <img src="./src/assets/logo_icon.svg" alt="logo" className='h-100 w-[30%] hidden md:block' />
+        <img src="/logo_icon.svg" alt="logo" className='h-100 w-[30%] hidden md:block' />
       </div>
     </div>
   )

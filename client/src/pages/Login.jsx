@@ -30,7 +30,7 @@ const Login = () => {
 
   return (
     <div className='backdrop-blur-xl h-screen w-full flex flex-col justify-evenly items-center'>
-      <img src="./src/assets/logo_big.svg" alt="logo" className='h-20' />
+      <img src="/logo_big.svg" alt="logo" className='h-20' />
       <form className='bg-white/8 h-[50%] w-[90%] sm:h-95 sm:w-85 flex flex-col justify-evenly items-center border-2 border-gray-600 rounded-lg' onSubmit={(e) => {
         loginHandler(e);
       }}>

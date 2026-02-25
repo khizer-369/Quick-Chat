@@ -47,7 +47,7 @@ const Requests = () => {
                 <div className='h-[25%] flex flex-col justify-evenly items-center border-b-2 border-gray-500'>
                     <div className='w-[90%] flex gap-2'>
                         <NavLink to={"/"}>
-                            <img src="./src/assets/arrow_icon.png" alt="arrow icon" className='h-8 cursor-pointer' />
+                            <img src="/arrow_icon.png" alt="arrow icon" className='h-8 cursor-pointer' />
                         </NavLink>
                         <h1 className='text-2xl'>Send Request</h1>
                     </div>
@@ -58,7 +58,7 @@ const Requests = () => {
                             setReceiverEmail(e.target.value);
                         }} />
                         <button className='cursor-pointer'>
-                            <img src="./src/assets/send_button.svg" alt="send button" className='h-10' />
+                            <img src="/send_button.svg" alt="send button" className='h-10' />
                         </button>
                     </form>
                 </div>
@@ -74,7 +74,7 @@ const Requests = () => {
                                     >
                                         <div className='flex items-center gap-2'>
                                             <img
-                                                src={e.profilePhotoUrl ? e.profilePhotoUrl : "./src/assets/avatar_icon.png"}
+                                                src={e.profilePhotoUrl ? e.profilePhotoUrl : "/avatar_icon.png"}
                                                 alt="profile image"
                                                 className="h-10 w-10 rounded-full"
                                             />

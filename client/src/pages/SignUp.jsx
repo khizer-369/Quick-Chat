@@ -35,7 +35,7 @@ const SignUp = () => {
 
   return (
     <div className='backdrop-blur-xl h-screen w-full flex flex-col justify-evenly items-center'>
-      <img src="./src/assets/logo_big.svg" alt="logo" className='h-20' />
+      <img src="/logo_big.svg" alt="logo" className='h-20' />
       <div className='bg-white/8 h-[60%] w-[90%] sm:h-110 sm:w-85 border-2 border-gray-600 rounded-lg'>
         {signUpPart === 1 ? <form className='h-full w-full flex flex-col justify-evenly items-center' onSubmit={(e) => {
           e.preventDefault();
