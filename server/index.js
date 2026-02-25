@@ -51,6 +51,10 @@ app.use("/api", UserRouter);
 app.use("/api", ProfileRouter);
 app.use("/api", MessageRouter);
 
+app.get("/", (req, res) => {
+    res.send("Hello World");
+})
+
 server.listen(PORT, () => {
     dbConnect();
     console.log(`Server started on ${PORT}`);
