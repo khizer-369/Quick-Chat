@@ -50,10 +50,6 @@ app.use("/api", UserRouter);
 app.use("/api", ProfileRouter);
 app.use("/api", MessageRouter);
 
-app.get("/", (req, res) => {
-    res.send("Hello World");
-})
-
 dbConnect();
 
 if (process.env.NODE_ENV != "production") {

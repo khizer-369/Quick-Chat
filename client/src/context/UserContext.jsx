@@ -7,8 +7,8 @@ import { io } from "socket.io-client";
 export const DataContext = createContext();
 
 const UserContext = ({ children }) => {
-    const serverUrl = "http://localhost:3000/api";
-    const socketUrl = "http://localhost:3000";
+    const serverUrl = "https://quick-chat-server-liart-tau.vercel.app/api";
+    const socketUrl = "https://quick-chat-server-liart-tau.vercel.app";
     const [user, setUser] = useState(null);
     const [users, setUsers] = useState(null);
     const [requests, setRequests] = useState(null);
