@@ -27,6 +27,7 @@ const Chat = ({ chatStatus, setChatStatus, selectedUser, setSelectedUser, messag
     });
     setText("");
     setImage(null);
+    setEmoji(false);
   }
 
   const deleteUser = () => {
@@ -94,11 +95,11 @@ const Chat = ({ chatStatus, setChatStatus, selectedUser, setSelectedUser, messag
                 }} />
                 <span className='text-xs text-gray-300 absolute bottom-2 right-2.5'>{time}</span>
               </div>}
-              {(e?.text && e?.imageUrl) && <div className={`min-h-60 w-47 flex flex-col justify-center items-center rounded-xl ${e?.senderId === selectedUser._id ? "bg-gray-700 rounded-tl-sm" : "bg-violet-600 rounded-tr-sm"}`}>
+              {(e?.text && e?.imageUrl) && <div className={`relative min-h-60 w-47 flex flex-col justify-center items-center rounded-xl ${e?.senderId === selectedUser._id ? "bg-gray-700 rounded-tl-sm" : "bg-violet-600 rounded-tr-sm"}`}>
                 <img src={e?.imageUrl} alt="image" className='h-53 w-45 rounded-xl cursor-pointer' onClick={() => {
                   setPreviewImage(e?.imageUrl);
                 }} />
-                <p className='w-44'>{e?.text}<span className='text-xs text-gray-300 ml-2'>{time}</span></p>
+                <p className='w-44'>{e?.text}<span className='absolute bottom-1 right-2 text-xs text-gray-300 ml'>{time}</span></p>
               </div>}
             </div>
           );
