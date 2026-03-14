@@ -27,7 +27,6 @@ const Chat = ({ chatStatus, setChatStatus, selectedUser, setSelectedUser, messag
     });
     setText("");
     setImage(null);
-    setEmoji(false);
   }
 
   const deleteUser = () => {
