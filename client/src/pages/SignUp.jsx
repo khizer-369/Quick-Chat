@@ -61,7 +61,7 @@ const SignUp = () => {
         }}>
           <div className='w-[90%] flex justify-between items-center'>
             <h1 className='text-2xl'>Sign Up</h1>
-            <img src="./src/assets/arrow_icon.png" alt="arrow icon" className='h-8 cursor-pointer' onClick={() => {
+            <img src="/arrow_icon.png" alt="arrow icon" className='h-8 cursor-pointer' onClick={() => {
               setSignUpPart(1);
             }} />
           </div>
