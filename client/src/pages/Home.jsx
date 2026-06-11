@@ -64,7 +64,7 @@ const Home = () => {
           <img src="/download_icon.png" alt="download icon" className="h-6 cursor-pointer" onClick={() => {
             handleDownload();
           }} />
-          <img src="./src/assets/cross_icon.png" alt="cross icon" className="h-8 cursor-pointer" onClick={() => {
+          <img src="/cross_icon.png" alt="cross icon" className="h-8 cursor-pointer" onClick={() => {
             setPreviewImage(null);
           }} />
         </div>
